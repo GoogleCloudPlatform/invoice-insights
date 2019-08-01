@@ -1,0 +1,56 @@
+#!/bin/bash
+# Retrieve the SKUs from Google Cloud, solving pagination in the process
+# See instructions at https://cloud.google.com/billing/v1/how-tos/catalog-api
+#
+# Copyright 2019 Google LLC
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+# https://www.apache.org/licenses/LICENSE-2.0
+# 
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+set -e
+
+echo "" > assets/gcp-skus.json
+pageToken=''
+output=''
+
+key=AIzaSyCOi1UfNSxdU50Nm26mT1Sutcw5xFYsKR8
+
+# To view the list of services
+# GET https://cloudbilling.googleapis.com/v1/services?key=${key}
+
+# [Compute Engine, Cloud SQL]
+for service in '9662-B51E-5089' '6F81-5844-456A'
+do
+  while :
+  do
+
+    echo "Retrieving skus for service ${service} with pageToken=${pageToken}"
+
+    # retrieve page
+    response=$(GET "https://cloudbilling.googleapis.com/v1/services/${service}/skus?key=${key}&pageToken=${pageToken}")
+
+    # accumulate Google SKUs. 
+    # Ugly hack ahead: concatenate two arrays and replace '][' by ','
+    parsedData=$(echo "$response" | jq -c '.skus | map(select(.serviceProviderName == "Google"))')
+    output=$(echo "${output}${parsedData}" | sed -r 's/\]\[/,/g')
+
+    # prepare for next page
+    pageToken=$(echo $response | jq -c -r '.nextPageToken')
+    if [[ "$pageToken" == "" ]]
+    then
+      break
+    fi
+  done
+done
+
+echo $output | jq '.' > assets/gcp-skus.json
+echo "GCP SKUs saved to assets/gcp-skus.json"
