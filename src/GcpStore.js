@@ -16,7 +16,7 @@
  */
 
 import assert from "assert";
-import { readJSON, gbToMb, getGcpSkuDescription, concatTruthy } from "./util";
+import { readJSON, gbToMb, getGcpSkuDescription, concatTruthy, capitalizeFirstLetter } from "./util";
 import SortedArray from "sorted-array";
 import CustomGcpVm from "./CustomGcpVm";
 import options from "./Options";
@@ -177,6 +177,16 @@ class GcpStore {
       cpu: findSku("custom CORE"),
       memory: findSku("custom RAM")
     };
+  }
+
+  // serviceTier: one of basic, standard
+  // capacityTier: one of M1, M2, M3, M4, M5
+  getSkusForMemorystore({region, serviceTier, capacityTier}) {
+    const description = `Redis Capacity ${capitalizeFirstLetter(serviceTier)} ${capacityTier}`;
+    return this.findSkusByDescription(
+      region.gcp.id,
+      description
+    )
   }
 
   _getSkusForVm({ region, name }) {

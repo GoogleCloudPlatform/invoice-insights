@@ -260,3 +260,11 @@ export function calculateSqlPricing(hours, gcpVmType, skus) {
     detail
   });
 }
+
+export function calculateMemorystorePricing(gbHours, sku) {
+  const unitRate = skuToCostPerUnit(sku);
+  return bigToString({
+    unitRate,
+    monthlyRate: unitRate.mul(gbHours)
+  });
+}

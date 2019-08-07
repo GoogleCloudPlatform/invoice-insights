@@ -23,6 +23,7 @@ import chalk from "chalk";
 import options from "./Options";
 import { printStorage } from "./StorageReport";
 import { printSQL } from "./SqlReport";
+import { printCache } from "./CacheReport";
 
 program
   .version("0.1.0")
@@ -75,7 +76,7 @@ program
     _ => (options.roundMonths = true)
   )
   .description(
-    "Prints a report of Google Compute Engine instances equivalent to the EC2 VMs in the invoice"
+    "Prints a report of Google Compute Engine instances equivalent to the EC2 instances in the invoice"
   )
   .action(async filename => {
     const { lines, warnings } = await parseCSV(filename);
@@ -87,7 +88,7 @@ program
 program
   .command("storage <filename>")
   .description(
-    "Prints a report of Google Cloud storage equivalent to the EBS in the invoice"
+    "Prints a report of Google Cloud storage equivalent to the EBS storage in the invoice"
   )
   .action(async filename => {
     const { storage, warnings } = await parseCSV(filename);
@@ -99,11 +100,27 @@ program
 program
   .command("sql <filename>")
   .description(
-    "Prints a report of Cloud SQL equivalent to the RDS in the invoice"
+    "Prints a report of Cloud SQL equivalent to the RDS instances in the invoice"
   )
   .action(async filename => {
     const { lines, warnings } = await parseCSV(filename);
     const output = printSQL(lines);
+    console.log(output);
+    warnings.map(warning => console.warn(chalk.red(warning)));
+  });
+program
+  .command("cache <filename>")
+  .description(
+    "Prints a report of Memorystore equivalent to the ElastiCache instances in the invoice"
+  )
+  .option(
+    "--tier <value>",
+    "Set the Memorystore tier to use (one of: 'basic', 'standard'). Default is 'basic'.",
+    value => options.setMemorystoreTier(value)
+  )
+  .action(async filename => {
+    const { lines, warnings } = await parseCSV(filename);
+    const output = printCache(lines);
     console.log(output);
     warnings.map(warning => console.warn(chalk.red(warning)));
   });

@@ -23,7 +23,8 @@ import {
   calculateSharedPricing,
   calculatePricing,
   calculatePremiumOsPricing,
-  calculateSqlPricing
+  calculateSqlPricing,
+  calculateMemorystorePricing
 } from "./GcpPricing";
 import options from "./Options";
 import assert from "assert";
@@ -39,6 +40,12 @@ function isRDS({ ProductCode, ProductName }) {
   return (
     ProductCode === "AmazonRDS" ||
     ProductName === "Amazon Relational Database Service"
+  );
+}
+
+function isElasticache({ ProductCode, ProductName }) {
+  return (
+    ProductCode === "AmazonElastiCache" || ProductName === "Amazon ElastiCache"
   );
 }
 
@@ -72,6 +79,35 @@ export function awsDatabaseToGcp(awsDatabase) {
   }
 }
 
+export function awsCacheToGcpTier({ memory }) {
+  if (memory < 5) {
+    return {
+      name: "M1",
+      maxBandwidth: 3
+    };
+  } else if (memory < 11) {
+    return {
+      name: "M2",
+      maxBandwidth: 3
+    };
+  } else if (memory < 35) {
+    return {
+      name: "M3",
+      maxBandwidth: 3
+    };
+  } else if (memory < 100) {
+    return {
+      name: "M4",
+      maxBandwidth: 6
+    };
+  } else {
+    return {
+      name: "M5",
+      maxBandwidth: 12
+    };
+  }
+}
+
 const vmUsageTypes = new Set(["BoxUsage", "SpotUsage"]);
 
 /**
@@ -96,6 +132,8 @@ export class InvoiceLine {
       ) {
         // Anything else should be an RDS/Aurora instance
         this.processRdsLine({ usageTypeId, productId, region, row });
+      } else if (isElasticache(row) && usageTypeId === "NodeUsage") {
+        this.processElasticacheLine({ productId, region, row });
       }
     } catch (e) {
       console.error(e.stack);
@@ -149,6 +187,31 @@ export class InvoiceLine {
       gcpVmType,
       gcpPricing
     });
+  }
+
+  processElasticacheLine({ productId, region, row: { ItemDescription } }) {
+    const awsVmType = getAwsVmType(productId.replace(/^cache\./, ""));
+    const capacityTier = awsCacheToGcpTier(awsVmType);
+    const gcpPricing = this.calculateCachePricing({
+      serviceTier: options.memorystoreTier,
+      capacityTier: capacityTier.name
+    });
+    Object.assign(this, {
+      type: "CACHE",
+      awsVmType,
+      capacityTier,
+      gcpPricing
+    });
+  }
+
+  calculateCachePricing({ serviceTier, capacityTier }) {
+    const sku = getGcpStore().getSkusForMemorystore({
+      region: this.region,
+      serviceTier,
+      capacityTier
+    });
+    const gbHours = this.row.UsageQuantity;
+    return calculateMemorystorePricing(gbHours, sku);
   }
 
   calculateSqlPricing({ ha, database, gcpVmType }) {

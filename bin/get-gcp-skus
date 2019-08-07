@@ -28,7 +28,7 @@ key=AIzaSyCOi1UfNSxdU50Nm26mT1Sutcw5xFYsKR8
 # GET https://cloudbilling.googleapis.com/v1/services?key=${key}
 
 # [Compute Engine, Cloud SQL]
-for service in '9662-B51E-5089' '6F81-5844-456A'
+for service in '9662-B51E-5089' '6F81-5844-456A' '5AF5-2C11-D467'
 do
   while :
   do

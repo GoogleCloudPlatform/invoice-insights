@@ -21,7 +21,8 @@ import {
   calculatePricing,
   calculatePremiumOsPricing,
   calculateBlockStoragePricing,
-  calculateSqlPricing
+  calculateSqlPricing,
+  calculateMemorystorePricing
 } from "../src/GcpPricing";
 import { HOURS_IN_A_MONTH } from "../src/util";
 import Big from "big-js";
@@ -439,6 +440,26 @@ describe("GcpPricing", () => {
         hourlyRate: "0.521234765625",
         monthlyRate: "380.50137890625"
       });
+    });
+  });
+
+  it("Calculates Memorystore pricing", () => {
+    const region = getGcpRegion("europe-west1");
+    const msp = function(gbHour, serviceTier, capacityTier) {
+      const sku = gcpStore.getSkusForMemorystore({
+        region,
+        serviceTier,
+        capacityTier
+      });
+      return calculateMemorystorePricing(gbHour, sku);
+    };
+    expect(msp(1, "basic", "M1")).toEqual({
+      monthlyRate: "0.051",
+      unitRate: "0.051"
+    });
+    expect(msp(10, "standard", "M5")).toEqual({
+      monthlyRate: "0.35",
+      unitRate: "0.035"
     });
   });
 });

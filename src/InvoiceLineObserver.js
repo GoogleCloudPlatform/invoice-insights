@@ -121,6 +121,13 @@ export default class InvoiceLineObserver {
       );
     }
 
+    // Elasticache instances with Redis only use one CPU
+    if (type === "CACHE" && awsVmType.vCPU > 1) {
+      this.messages.add(
+        `Elasticache instances with Redis do not use more than one CPU.`
+      );
+    }
+
     // warn of custom mapped instances
     if (productId && options.mappedInstances[productId]) {
       this.mappedInstances.add(productId);

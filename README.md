@@ -12,6 +12,7 @@ Only the AWS invoice is supported at this time. Cloud Insights can process the f
 - **Premium OS**: Windows, Red Hat and Suse
 - **Block Storage**: `sc1`, `st1`, `gp2` and `io1`
 - **RDS Instance Hours**
+- **Elasticache Instance Hours**
 
 ## Translating into Google Cloud
 
@@ -21,6 +22,8 @@ Cloud Insights can translate to the following services on Google Cloud:
 - **Usage type**: on demand, preemptible, commit 1 year, commit 3 year
 - **Premium OS**: Windows, Red Hat and Suse
 - **Block storage**: Standard and SSD
+- **Cloud Storage instances**
+- **Memorystore instances**
 
 ## Feature Roadmap
 
@@ -32,6 +35,7 @@ The following is a list of to-do features in the roadmap:
 - **S3 storage report** (operations and Gb/month). You can extract that from the Summary.
 - **SAP Premium OS** (Red Hat and Suse)
 - **SQL Server instances**
+- **Elasticache snapshots**
 
 ## Getting started
 

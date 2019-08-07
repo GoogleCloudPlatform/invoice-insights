@@ -28,7 +28,7 @@ class Options {
   setFormat(f) {
     if (f && f !== "table" && f !== "csv") {
       console.error(
-        `Invalid value for format. Valid values: csv,table. Current value: ${format}`
+        `Invalid value for format. Expected one of [csv,table], found: ${format}`
       );
       process.exit(1);
     }
@@ -49,6 +49,13 @@ class Options {
       );
       process.exit(1);
     }
+  }
+
+  setMemorystoreTier(value) {
+    if (value !== 'basic' && value !== 'standard') {
+      console.error(`Invalid value for tier. Expected one of [basic,standard], found: ${value}`);
+    }
+    this.memorystoreTier = value;
   }
 
   addMappedInstance(values) {
@@ -92,5 +99,6 @@ export default new Options({
   },
   mappedRegions: {},
   debug: false,
-  roundMonths: false
+  roundMonths: false,
+  memorystoreTier: 'basic'
 });
