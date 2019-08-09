@@ -1,5 +1,5 @@
 {
-  "name": "cloud-insights",
+  "name": "invoice-insights",
   "version": "1.0.0",
   "description": "A cloud invoice analyzer",
   "scripts": {

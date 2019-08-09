@@ -27,7 +27,7 @@ import { printCache } from "./CacheReport";
 
 program
   .version("0.1.0")
-  .name("cloud-insights")
+  .name("invoice-insights")
   .description("A tool to analyze your cloud invoice.")
   .option(
     "--format <value>",

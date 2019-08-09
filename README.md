@@ -1,4 +1,4 @@
-# Cloud Insights
+# Invoice Insights
 
 This command line tool will analyze the invoice from a cloud provider and create a report with the total usage and cost, including the equivalent products and cost on GCP. We take the invoice CSV as input, and generate an ascii table or a CSV file with the information extracted.
 
@@ -6,7 +6,7 @@ This tool requires [nodejs](https://nodejs.org/en/).
 
 ## Processing the invoice
 
-Only the AWS invoice is supported at this time. Cloud Insights can process the following services from the invoice:
+Only the AWS invoice is supported at this time. Invoice Insights can process the following services from the invoice:
 
 - **AWS Regions** and **VM types**.
 - **Premium OS**: Windows, Red Hat and Suse
@@ -16,7 +16,7 @@ Only the AWS invoice is supported at this time. Cloud Insights can process the f
 
 ## Translating into Google Cloud
 
-Cloud Insights can translate to the following services on Google Cloud:
+Invoice Insights can translate to the following services on Google Cloud:
 
 - **VM types**: standard VMs (incl. high memory and high CPU), memory-optimized, custom (incl. extended memory), shared core (`f1-micro` and `g1-small`).
 - **Usage type**: on demand, preemptible, commit 1 year, commit 3 year
@@ -44,13 +44,13 @@ The following is a list of to-do features in the roadmap:
 npm i
 
 # Get high-level summary from an AWS invoice
-bin/cloud-insights summary test/test.csv
+bin/invoice-insights summary test/test.csv
 
 # Get VM stats and GCP equivalent
-bin/cloud-insights instances test/test.csv --format csv
+bin/invoice-insights instances test/test.csv --format csv
 
 # Print mappings with debug information, rounding to months, overriding a region mapping
-bin/cloud-insights instances csv/real-1.csv --debug --round-months --map-region eu-central-1=europe-west1
+bin/invoice-insights instances csv/real-1.csv --debug --round-months --map-region eu-central-1=europe-west1
 ```
 
 ## Mapping to instances on GCP
@@ -60,7 +60,7 @@ We search for a VM with the same number of CPUs and a difference in memory below
 Shared core (`t2` instances on AWS) will be mapped to `f1-micro` and `g1-small` on GCP when possible, or to a standard VM otherwise. Instance mappings can be overriden with `--map-instance`, and region mapping with `--map-region`. These arguments can receive multiple values.
 
 ```bash
-cloud-insights invoice.csv --map-instance t2.nano=n1-standard1 --map-instance t2.micro=n1-standard2 --map-region eu-central-1=europe-west1
+invoice-insights invoice.csv --map-instance t2.nano=n1-standard1 --map-instance t2.micro=n1-standard2 --map-region eu-central-1=europe-west1
 ```
 
 When calculating SUDs, we assume that VMs are running 730 hours per month (100% of the time) where possible. We use this to guess the number of concurrent instances.
