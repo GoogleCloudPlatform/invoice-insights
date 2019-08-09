@@ -76,10 +76,16 @@ export function parseUsageType(productName, UsageType) {
     return { usageTypeId, productId };
   }
 
+  // Support contract
+  if (productName.startsWith("AWS Support")) {
+    const [, productId] = /\((.+)\)/.exec(productName) || [];
+    return { usageTypeId: "AWS Support", productId };
+  }
+
   const parts = usageTypeRegEx.exec(UsageType);
   if (!parts) {
     throw new Error(
-      `Cannot parse { productName ${productName}, UsageType: ${UsageType} }`
+      `Cannot parse { productName: ${productName}, UsageType: ${UsageType} }`
     );
   }
   const [, , regionId, usageTypeId, , productId] = parts;
@@ -167,5 +173,5 @@ export function lazyInitObject(container, field, factoryCallback) {
 }
 
 export function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }

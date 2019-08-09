@@ -118,6 +118,10 @@ describe("Util", function() {
       regionId: "EU",
       usageTypeId: "InactivePipelines"
     });
+    expect(parseUsageType("AWS Support (Business)", "")).toMatchObject({
+      usageTypeId: "AWS Support",
+      productId: "Business"
+    });
   });
 
   it("getGcpVmDescription", () => {
