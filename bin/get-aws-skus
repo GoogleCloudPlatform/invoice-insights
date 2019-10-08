@@ -15,5 +15,5 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-curl -s https://raw.githubusercontent.com/powdahound/ec2instances.info/master/www/instances.json 2>&1 | jq '.' > third_party/ec2instances.info/aws-skus.json
+curl -s https://raw.githubusercontent.com/powdahound/ec2instances.info/master/www/instances.json 2>&1 | jq 'del(.[].pricing)' > third_party/ec2instances.info/aws-skus.json
 echo "AWS SKUs saved to third_party/ec2instances.info/aws-skus.json"

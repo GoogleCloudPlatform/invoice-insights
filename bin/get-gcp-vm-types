@@ -17,3 +17,4 @@
 
 gcloud components update --quiet
 gcloud compute machine-types list --format=json > assets/gcp-vm-types.json
+echo "GCP VM types saved to assets/gcp-vm-types.json"
