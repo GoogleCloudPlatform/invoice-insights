@@ -4,6 +4,8 @@ This command line tool will analyze the invoice from a cloud provider and create
 
 This tool requires [nodejs](https://nodejs.org/en/).
 
+**DISCLAIMER**: This is not an officially supported Google product.
+
 ## Processing the invoice
 
 Only the AWS invoice is supported at this time. Invoice Insights can process the following services from the invoice:
