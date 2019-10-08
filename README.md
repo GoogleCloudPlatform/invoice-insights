@@ -42,17 +42,14 @@ The following is a list of to-do features in the roadmap:
 ## Getting started
 
 ```sh
-# Install dependencies
-npm i
-
 # Get high-level summary from an AWS invoice
-bin/invoice-insights summary test/test.csv
+npx invoice-insights summary test/test.csv
 
 # Get VM stats and GCP equivalent
-bin/invoice-insights instances test/test.csv --format csv
+npx invoice-insights instances test/test.csv --format csv
 
 # Print mappings with debug information, rounding to months, overriding a region mapping
-bin/invoice-insights instances csv/real-1.csv --debug --round-months --map-region eu-central-1=europe-west1
+npx invoice-insights instances csv/real-1.csv --debug --round-months --map-region eu-central-1=europe-west1
 ```
 
 ## Mapping to instances on GCP
@@ -62,14 +59,14 @@ We search for a VM with the same number of CPUs and a difference in memory below
 Shared core (`t2` instances on AWS) will be mapped to `f1-micro` and `g1-small` on GCP when possible, or to a standard VM otherwise. Instance mappings can be overriden with `--map-instance`, and region mapping with `--map-region`. These arguments can receive multiple values.
 
 ```bash
-invoice-insights invoice.csv --map-instance t2.nano=n1-standard1 --map-instance t2.micro=n1-standard2 --map-region eu-central-1=europe-west1
+npx invoice-insights invoice.csv --map-instance t2.nano=n1-standard1 --map-instance t2.micro=n1-standard2 --map-region eu-central-1=europe-west1
 ```
 
-When calculating SUDs, we assume that VMs are running 730 hours per month (100% of the time) where possible. We use this to guess the number of concurrent instances.
+When calculating SUDs, we assume that VMs are running 730 hours per month (100% of the time) where possible. This is used to estimate the number of concurrent instances.
 
 ## Exporting your invoice from AWS
 
-If you are sensitive about sharing pricing details, you may want to filter out these columns when creating the invoice export from AWS:
+If pricing details are considered sensitive information, filter out these columns when creating the invoice export from AWS:
 
 - `BlendedRate`
 - `CurrencyCode`
