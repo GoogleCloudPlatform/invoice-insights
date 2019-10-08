@@ -1,6 +1,6 @@
 {
   "name": "@google-cloud/invoice-insights",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A cloud invoice analyzer. Process your cloud invoice and transform into equivalent products in Google Cloud.",
   "repository": {
     "type": "git",
