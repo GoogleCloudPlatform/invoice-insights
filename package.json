@@ -2,9 +2,6 @@
   "name": "@google-cloud/invoice-insights",
   "version": "1.0.0",
   "description": "A cloud invoice analyzer. Process your cloud invoice and transform into equivalent products in Google Cloud.",
-  "scripts": {
-    "test": "mocha -r esm"
-  },
   "repository": {
     "type": "git",
     "url": "git@github.com:GoogleCloudPlatform/invoice-insights.git"
@@ -15,6 +12,7 @@
     "aws",
     "invoice"
   ],
+  "main": "index.js",
   "author": "Nacho Coloma <icoloma@google.com>",
   "license": "Apache-2.0",
   "dependencies": {
@@ -30,5 +28,12 @@
   "devDependencies": {
     "expect": "^24.8.0",
     "mz": "^2.7.0"
+  },
+  "scripts": {
+    "test": "mocha -r esm"
+  },
+  "publishConfig": {
+    "registry": "https://wombat-dressing-room.appspot.com",
+    "access": "public"
   }
 }
