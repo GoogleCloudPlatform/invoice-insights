@@ -22,7 +22,7 @@ Invoice Insights can translate to the following services on Google Cloud:
 - **Usage type**: on demand, preemptible, commit 1 year, commit 3 year
 - **Premium OS**: Windows, Red Hat and Suse
 - **Block storage**: Standard and SSD
-- **Cloud Storage instances**
+- **Cloud SQL instances**
 - **Memorystore instances**
 
 ## Feature Roadmap
