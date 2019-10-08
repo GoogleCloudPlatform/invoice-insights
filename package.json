@@ -26,11 +26,11 @@
     "mocha": "^6.1.4",
     "neat-csv": "^5.0.0",
     "sorted-array": "^2.0.4",
-    "table": "^5.4.0"
+    "table": "^5.4.0",
+    "mz": "^2.7.0"
   },
   "devDependencies": {
-    "expect": "^24.8.0",
-    "mz": "^2.7.0"
+    "expect": "^24.8.0"
   },
   "scripts": {
     "test": "mocha -r esm"
