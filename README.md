@@ -96,8 +96,8 @@ npx jsonlint third_party/ec2instances.info/aws-skus.json
 npx jsonlint assets/gcp-skus.json
 npx jsonlint assets/gcp-vm-types.json
 
-# Run the tests:
-npx mocha -r esm --watch
+# Run the tests: (add --watch to keep watching)
+npx mocha -r esm
 ```
 
 To explore the SKUs manually:
