@@ -31,7 +31,7 @@ export function printCsvRow(row) {
 }
 
 export async function readJSON(f) {
-  const filename = path.resolve(f);
+  const filename = path.join(__dirname, "../" + f);
   assert(fse.existsSync(filename), `File not found: ${filename}`);
   const fileContents = await fse.readFile(filename);
   return JSON.parse(fileContents);

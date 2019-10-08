@@ -12,7 +12,10 @@
     "aws",
     "invoice"
   ],
-  "main": "index.js",
+  "main": "src/main.js",
+  "bin": {
+    "invoice-insights": "./index.js"
+  },
   "author": "Nacho Coloma <icoloma@google.com>",
   "license": "Apache-2.0",
   "dependencies": {
