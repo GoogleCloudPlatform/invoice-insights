@@ -17,4 +17,8 @@
  */
 
 require = require("esm")(module);
-module.exports = require("./src/main.js");
+
+require("@oclif/command")
+  .run()
+  .then(require("@oclif/command/flush"))
+  .catch(require("@oclif/errors/handle"));

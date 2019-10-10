@@ -17,7 +17,7 @@
 
 import Big from "big-js";
 import assert from "assert";
-import { HOURS_IN_A_MONTH, NANOS_IN_A_UNIT } from "./util";
+import { HOURS_IN_A_MONTH, NANOS_IN_A_UNIT } from "../core/util";
 import { getGcpStore } from "./GcpStore";
 
 // return the % of SUD (value between 0 and 1)

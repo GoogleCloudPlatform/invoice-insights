@@ -15,17 +15,18 @@
  * limitations under the License.
  */
 
-import { getGcpStore, initGcpStore } from "../src/GcpStore";
+import { getGcpStore, initGcpStore } from "../src/gcp/GcpStore";
+import { getGcpRegion } from "../src/aws/Regions";
+import { skuToCostPerUnit } from "../src/gcp/GcpPricing";
+import { setOptions } from "../src/core/config";
 import expect from "expect";
-import { getGcpRegion } from "../src/Regions";
-import options from "../src/Options";
-import { skuToCostPerUnit } from "../src/GcpPricing";
 
 describe("GcpStore", function() {
   let store;
   const region = getGcpRegion("europe-west1");
 
   before(async () => {
+    setOptions();
     await initGcpStore();
     store = getGcpStore();
   });
@@ -46,19 +47,12 @@ describe("GcpStore", function() {
       memoryMb: 106496
     });
 
-    const oldValue = options.memoryWindow;
-    options.memoryWindow = 1;
-    try {
-      expect(
-        store.guessVmType({ region, cpus: 16, memory: 106 })
-      ).toMatchObject({
-        name: "n1-highcpu-16",
-        guestCpus: 16,
-        memoryMb: 14746
-      });
-    } finally {
-      options.memoryWindow = oldValue;
-    }
+    setOptions({ memoryWindow: 1 });
+    expect(store.guessVmType({ region, cpus: 16, memory: 106 })).toMatchObject({
+      name: "n1-highcpu-16",
+      guestCpus: 16,
+      memoryMb: 14746
+    });
   });
 
   it("should differentiate shared core and standard VM type", () => {
@@ -69,7 +63,7 @@ describe("GcpStore", function() {
     });
   });
 
-  it("should respect the configured map-instances", () => {
+  it("should respect the configured mapInstances", () => {
     expect(store.guessVmType({ region, name: "x1e.16xlarge" })).toMatchObject({
       name: "n1-megamem-96"
     });

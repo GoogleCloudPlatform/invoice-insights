@@ -20,13 +20,15 @@ import {
   extractOS,
   awsDatabaseToGcp,
   extractAwsDatabaseName
-} from "../src/InvoiceLine";
-import { getGcpStore, initGcpStore } from "../src/GcpStore";
+} from "../src/aws/InvoiceLine";
+import { getGcpStore, initGcpStore } from "../src/gcp/GcpStore";
+import { setOptions } from "../src/core/config";
 
 describe("InvoiceLine", function() {
   let gcpStore;
 
   before(async () => {
+    setOptions();
     await initGcpStore();
     gcpStore = getGcpStore();
   });

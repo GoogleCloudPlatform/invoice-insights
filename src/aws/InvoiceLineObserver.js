@@ -16,8 +16,8 @@
  */
 
 import Big from "big-js";
-import options from "./Options";
-import { mbToGb, lazyInitObject } from "./util";
+import { mbToGb, lazyInitObject } from "../core/util";
+import { options } from "../core/config";
 
 class StatsSink {
   constructor() {

@@ -20,7 +20,7 @@ import {
   parseUsageType,
   getGcpVmTypeDescription,
   getGcpSkuDescription
-} from "../src/util";
+} from "../src/core/util";
 
 describe("Util", function() {
   it("parseUsageType should parse normal and crazy cases", () => {

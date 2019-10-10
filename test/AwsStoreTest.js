@@ -15,13 +15,15 @@
  * limitations under the License.
  */
 
-import { getAwsStore, initAwsStore } from "../src/AwsStore";
+import { getAwsStore, initAwsStore } from "../src/aws/AwsStore";
 import expect from "expect";
+import { setOptions } from "../src/core/config";
 
 describe("AwsStore", function() {
   let store;
 
   before(async () => {
+    setOptions();
     await initAwsStore();
     store = getAwsStore();
   });

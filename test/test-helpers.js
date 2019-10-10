@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-import { parseCSV } from "../src/InvoiceParser";
+import { parseCSV } from "../src/aws/InvoiceParser";
+import { setOptions } from "../src/core/config";
 
 let parsedFile;
 export async function parseTestFile() {

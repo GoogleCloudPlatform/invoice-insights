@@ -16,12 +16,14 @@
  */
 
 import expect from "expect";
-import { parseTestFile } from "./util-test";
+import { parseTestFile } from "./test-helpers";
+import { setOptions } from "../src/core/config";
 
 describe("InvoiceParser", function() {
   let lines, stats;
 
   before(async () => {
+    setOptions();
     const result = await parseTestFile();
     lines = result.lines;
     stats = result.stats;

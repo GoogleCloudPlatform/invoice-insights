@@ -23,18 +23,20 @@ import {
   calculateBlockStoragePricing,
   calculateSqlPricing,
   calculateMemorystorePricing
-} from "../src/GcpPricing";
-import { HOURS_IN_A_MONTH } from "../src/util";
+} from "../src/gcp/GcpPricing";
+import { HOURS_IN_A_MONTH } from "../src/core/util";
+import { getGcpRegion } from "../src/aws/Regions";
+import CustomGcpVm from "../src/gcp/CustomGcpVm";
+import { initGcpStore, getGcpStore } from "../src/gcp/GcpStore";
 import Big from "big-js";
-import { getGcpRegion } from "../src/Regions";
-import CustomGcpVm from "../src/CustomGcpVm";
-import { initGcpStore, getGcpStore } from "../src/GcpStore";
 import expect from "expect";
+import { setOptions } from "../src/core/config";
 
 describe("GcpPricing", () => {
   let gcpStore;
 
   before(async () => {
+    setOptions();
     await initGcpStore();
     gcpStore = getGcpStore();
   });

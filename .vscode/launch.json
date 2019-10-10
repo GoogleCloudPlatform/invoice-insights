@@ -16,7 +16,16 @@
       "request": "launch",
       "name": "CLI instances",
       "program": "${workspaceFolder}/src/main.js",
-      "args": ["instances", "csv/real.csv", "--round-months"],
+      "args": [
+        "instances",
+        "csv/real.csv",
+        "--roundMonths",
+        "--debug",
+        "--mapRegion",
+        "eu-central-1=europe-west1",
+        "--mapInstance",
+        "x1e.16xlarge=n1-megamem-96"
+      ],
       "runtimeArgs": ["-r", "esm"]
     },
     {

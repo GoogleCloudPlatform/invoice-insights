@@ -16,8 +16,8 @@
  */
 
 import assert from "assert";
-import { gbToMb } from "./util";
-import options from "./Options";
+import { gbToMb } from "../core/util";
+import { options } from "../core/config";
 
 const MAX_CPU = 96;
 const MAX_MEMORY = 624;

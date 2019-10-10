@@ -19,13 +19,12 @@ import { table } from "table";
 import chalk from "chalk";
 import {
   printCsvRow,
-  mbToGb,
   toFixed,
   formatMoneyNumber,
   concatTruthy
-} from "./util";
-import options from "./Options";
-import { formatAwsSpec, formatGcpSpec } from "./InstanceReport";
+} from "../core/util";
+import { formatAwsSpec } from "./InstanceReport";
+import { options } from "../core/config";
 
 const bold = chalk.bold;
 
@@ -48,7 +47,7 @@ function printTable(lines) {
         formatAwsSpec(awsVmType),
         concatTruthy([
           region.gcp.id,
-          options.memorystoreTier,
+          options.tier,
           name,
           `max. ${maxBandwidth} Gbps`
         ]),
@@ -110,7 +109,7 @@ function printCSV(lines) {
             memory,
             ItemDescription.replace(/,/g, ""),
             region.gcp.id,
-            options.memorystoreTier,
+            options.tier,
             name,
             maxBandwidth,
             formatMoneyNumber(unitRate),
@@ -123,7 +122,6 @@ function printCSV(lines) {
 }
 
 export function printCache(lines) {
-  const { format } = options;
   const result = lines.filter(line => line.type === "CACHE");
-  return format === "csv" ? printCSV(result) : printTable(result);
+  return options.format === "csv" ? printCSV(result) : printTable(result);
 }

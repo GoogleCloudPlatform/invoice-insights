@@ -16,7 +16,8 @@
  */
 
 import expect from "expect";
-import CustomGcpVm from "../src/CustomGcpVm";
+import CustomGcpVm from "../src/gcp/CustomGcpVm";
+import { setOptions } from "../src/core/config";
 
 describe("CustomGcpVm", function() {
   function createInstance(cpu, memory) {
@@ -25,6 +26,10 @@ describe("CustomGcpVm", function() {
       memory
     });
   }
+
+  before(() => {
+    setOptions();
+  });
 
   it("matches the spec", () => {
     expect(createInstance(1, 1.1)).toEqual({
@@ -38,7 +43,7 @@ describe("CustomGcpVm", function() {
       memoryMb: 8192
     });
 
-    // memory limit excessive, but still under --memory-window
+    // memory limit excessive, but still under --memoryWindow
     // uses extendedMemory
     expect(createInstance(4, 650)).toEqual({
       name: "custom",

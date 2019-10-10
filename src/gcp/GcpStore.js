@@ -16,10 +16,15 @@
  */
 
 import assert from "assert";
-import { readJSON, gbToMb, getGcpSkuDescription, concatTruthy, capitalizeFirstLetter } from "./util";
+import {
+  readJSON,
+  gbToMb,
+  getGcpSkuDescription,
+  capitalizeFirstLetter
+} from "../core/util";
 import SortedArray from "sorted-array";
 import CustomGcpVm from "./CustomGcpVm";
-import options from "./Options";
+import { options } from "../core/config";
 
 function compareVMs(
   { guestCpus: guestCpus1, memoryMb: memoryMb1 },
@@ -102,7 +107,7 @@ class GcpStore {
   // the CPU number must be an exact match, the memory must be a percentage defined by memoryMatch
   // Careful: memory is received as GiB, but returned as MiB
   guessVmType({ region, name, cpus: expectedCPUs, memory }) {
-    // respect configured map-instances
+    // respect configured mapInstances
     const mappedInstanceId = options.mappedInstances[name];
     if (mappedInstanceId) {
       return this.getVmType(mappedInstanceId);
@@ -181,12 +186,11 @@ class GcpStore {
 
   // serviceTier: one of basic, standard
   // capacityTier: one of M1, M2, M3, M4, M5
-  getSkusForMemorystore({region, serviceTier, capacityTier}) {
-    const description = `Redis Capacity ${capitalizeFirstLetter(serviceTier)} ${capacityTier}`;
-    return this.findSkusByDescription(
-      region.gcp.id,
-      description
-    )
+  getSkusForMemorystore({ region, serviceTier, capacityTier }) {
+    const description = `Redis Capacity ${capitalizeFirstLetter(
+      serviceTier
+    )} ${capacityTier}`;
+    return this.findSkusByDescription(region.gcp.id, description);
   }
 
   _getSkusForVm({ region, name }) {
@@ -368,8 +372,8 @@ export function getGcpStore() {
 export async function initGcpStore() {
   if (!store) {
     const [skus, vmTypes] = await Promise.all([
-      readJSON("./assets/gcp-skus.json"),
-      readJSON("./assets/gcp-vm-types.json")
+      readJSON("../assets/gcp-skus.json"),
+      readJSON("../assets/gcp-vm-types.json")
     ]);
     store = new GcpStore(skus, vmTypes);
   }

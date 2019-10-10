@@ -18,7 +18,7 @@
 import fse from "mz/fs";
 import path from "path";
 import assert from "assert";
-import { getAwsRegion, RegionCodeRegEx } from "./Regions";
+import { getAwsRegion, RegionCodeRegEx } from "../aws/Regions";
 
 export const HOURS_IN_A_MONTH = 730;
 export const SECONDS_IN_AN_HOUR = 3600;

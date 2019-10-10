@@ -16,13 +16,15 @@
  */
 
 import expect from "expect";
-import { printSummary } from "../src/SummaryReport";
-import { parseTestFile } from "./util-test";
+import { printSummary } from "../src/reports/SummaryReport";
+import { parseTestFile } from "./test-helpers";
+import { setOptions } from "../src/core/config";
 
 describe("SummaryReport", function() {
   let lines, stats;
 
   before(async () => {
+    setOptions();
     const result = await parseTestFile();
     lines = result.lines;
     stats = result.stats;

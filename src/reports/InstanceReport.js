@@ -26,8 +26,8 @@ import {
   roundMonths,
   HOURS_IN_A_MONTH,
   concatTruthy
-} from "./util";
-import options from "./Options";
+} from "../core/util";
+import { options } from "../core/config";
 
 const bold = chalk.bold;
 

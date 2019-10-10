@@ -20,9 +20,14 @@ import {
   getGcpRegion,
   getAwsRegionByInvoiceCode,
   getAwsRegion
-} from "../src/Regions";
+} from "../src/aws/Regions";
+import { setOptions } from "../src/core/config";
 
 describe("Regions", function() {
+  before(() => {
+    setOptions();
+  });
+
   it("getAwsRegion", () => {
     expect(getAwsRegion("eu-central-1")).toMatchObject({
       code: "EUC1"

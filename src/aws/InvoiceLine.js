@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { parseUsageType, roundMonths } from "./util";
+import { parseUsageType, roundMonths } from "../core/util";
 import { getAwsVmType } from "./AwsStore";
-import { getGcpStore } from "./GcpStore";
+import { getGcpStore } from "../gcp/GcpStore";
 import { getAwsRegionByInvoiceCode } from "./Regions";
 import {
   calculateSharedPricing,
@@ -25,9 +25,9 @@ import {
   calculatePremiumOsPricing,
   calculateSqlPricing,
   calculateMemorystorePricing
-} from "./GcpPricing";
-import options from "./Options";
+} from "../gcp/GcpPricing";
 import assert from "assert";
+import { options } from "../core/config";
 
 function isEC2({ ProductCode, ProductName }) {
   return (
@@ -138,9 +138,7 @@ export class InvoiceLine {
     } catch (e) {
       console.error(e.stack);
       throw new Error(
-        `Cannot process { ProductName=${row.ProductName}, UsageType=${
-          row.UsageType
-        } } (${e.message})`
+        `Cannot process { ProductName=${row.ProductName}, UsageType=${row.UsageType} } (${e.message})`
       );
     }
   }
@@ -189,11 +187,11 @@ export class InvoiceLine {
     });
   }
 
-  processElasticacheLine({ productId, region, row: { ItemDescription } }) {
+  processElasticacheLine({ productId }) {
     const awsVmType = getAwsVmType(productId.replace(/^cache\./, ""));
     const capacityTier = awsCacheToGcpTier(awsVmType);
     const gcpPricing = this.calculateCachePricing({
-      serviceTier: options.memorystoreTier,
+      serviceTier: options.tier,
       capacityTier: capacityTier.name
     });
     Object.assign(this, {

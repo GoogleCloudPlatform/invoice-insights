@@ -16,13 +16,15 @@
  */
 
 import expect from "expect";
-import { printStorage } from "../src/StorageReport";
-import { parseTestFile } from "./util-test";
+import { printStorage } from "../src/reports/StorageReport";
+import { parseTestFile } from "./test-helpers";
+import { setOptions } from "../src/core/config";
 
 describe("StorageReport", function() {
   let storage;
 
   before(async () => {
+    setOptions();
     const result = await parseTestFile();
     storage = result.storage;
   });

@@ -15,14 +15,16 @@
  * limitations under the License.
  */
 
+import { printInstances } from "../src/reports/InstanceReport";
+import { parseTestFile } from "./test-helpers";
 import expect from "expect";
-import { printInstances } from "../src/InstanceReport";
-import { parseTestFile } from "./util-test";
+import { setOptions } from "../src/core/config";
 
 describe("InstanceReport", function() {
   let lines;
 
   before(async () => {
+    setOptions();
     const result = await parseTestFile();
     lines = result.lines;
   });

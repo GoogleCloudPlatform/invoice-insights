@@ -16,9 +16,14 @@
  */
 
 import expect from "expect";
-import InvoiceLineObserver from "../src/InvoiceLineObserver";
+import InvoiceLineObserver from "../src/aws/InvoiceLineObserver";
+import { setOptions } from "../src/core/config";
 
 describe("InvoiceLineObserver", function() {
+  before(() => {
+    setOptions();
+  });
+
   it("should handle missing fields", () => {
     const observer = new InvoiceLineObserver();
     function addStats(

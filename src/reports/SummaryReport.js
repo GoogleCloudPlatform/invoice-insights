@@ -17,8 +17,8 @@
 
 import { table } from "table";
 import chalk from "chalk";
-import { printCsvRow } from "./util";
-import options from "./Options";
+import { printCsvRow } from "../core/util";
+import { options } from "../core/config";
 
 function printCSV(rows) {
   return (
@@ -68,7 +68,6 @@ function printTable(rows) {
 }
 
 export function printSummary(stats) {
-  const { format } = options;
   const rows = [];
   Object.entries(stats).forEach(([productCategoryId, productCategory]) => {
     Object.entries(productCategory).forEach(([usageTypeId, usageType]) => {
@@ -85,5 +84,5 @@ export function printSummary(stats) {
     });
   });
 
-  return format === "csv" ? printCSV(rows) : printTable(rows);
+  return options.format === "csv" ? printCSV(rows) : printTable(rows);
 }

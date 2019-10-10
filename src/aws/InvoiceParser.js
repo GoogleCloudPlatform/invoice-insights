@@ -20,7 +20,7 @@ import fse from "mz/fs";
 import path from "path";
 import assert from "assert";
 import { initAwsStore } from "./AwsStore";
-import { initGcpStore } from "./GcpStore";
+import { initGcpStore } from "../gcp/GcpStore";
 import { InvoiceLine } from "./InvoiceLine";
 import InvoiceLineObserver from "./InvoiceLineObserver";
 

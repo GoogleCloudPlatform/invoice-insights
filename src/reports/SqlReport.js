@@ -23,9 +23,9 @@ import {
   toFixed,
   formatMoneyNumber,
   concatTruthy
-} from "./util";
-import options from "./Options";
+} from "../core/util";
 import { formatAwsSpec, formatGcpSpec } from "./InstanceReport";
+import { options } from "../core/config";
 
 const bold = chalk.bold;
 
@@ -127,7 +127,6 @@ function printCSV(lines) {
 }
 
 export function printSQL(lines) {
-  const { format } = options;
   const result = lines.filter(line => line.type === "SQL");
-  return format === "csv" ? printCSV(result) : printTable(result);
+  return options.format === "csv" ? printCSV(result) : printTable(result);
 }

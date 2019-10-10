@@ -17,10 +17,15 @@
 
 import { table } from "table";
 import chalk from "chalk";
-import { printCsvRow, toFixed, formatMoneyNumber, concatTruthy } from "./util";
-import options from "./Options";
-import { getAwsRegionByInvoiceCode } from "./Regions";
-import { calculateBlockStoragePricing } from "./GcpPricing";
+import {
+  printCsvRow,
+  toFixed,
+  formatMoneyNumber,
+  concatTruthy
+} from "../core/util";
+import { getAwsRegionByInvoiceCode } from "../aws/Regions";
+import { calculateBlockStoragePricing } from "../gcp/GcpPricing";
+import { options } from "../core/config";
 
 const bold = chalk.bold;
 
@@ -100,7 +105,6 @@ function printCSV(rows) {
 }
 
 export function printStorage(storage) {
-  const { format } = options;
   const rows = [];
   Object.entries(storage).forEach(([regionId, regionData]) => {
     const region = getAwsRegionByInvoiceCode(regionId);
@@ -122,5 +126,5 @@ export function printStorage(storage) {
     );
   });
 
-  return format === "csv" ? printCSV(rows) : printTable(rows);
+  return options.format === "csv" ? printCSV(rows) : printTable(rows);
 }

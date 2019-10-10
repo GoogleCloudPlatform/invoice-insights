@@ -16,7 +16,7 @@
  */
 
 import assert from "assert";
-import { readJSON } from "./util";
+import { readJSON } from "../core/util";
 
 class VmType {
   constructor(sku) {
@@ -61,7 +61,7 @@ export function getAwsStore() {
 export async function initAwsStore() {
   if (!store) {
     const skus = await readJSON(
-      "./third_party/ec2instances.info/aws-skus.json"
+      "../third_party/ec2instances.info/aws-skus.json"
     );
     store = new AwsStore(skus);
   }
