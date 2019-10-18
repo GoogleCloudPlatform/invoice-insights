@@ -24,6 +24,7 @@ import { printStorage } from "./reports/StorageReport";
 import { printSQL } from "./reports/SqlReport";
 import { printCache } from "./reports/CacheReport";
 import { setOptions } from "./core/config";
+import { printWarnings } from "./core/util";
 
 function parseMappings(arr) {
   const mappedValues = {};
@@ -114,7 +115,7 @@ yargs
       const { lines, warnings } = await parseCSV(filename);
       const output = printInstances(lines);
       console.log(output);
-      warnings.map(warning => console.warn(chalk.red(warning)));
+      printWarnings(warnings);
     }
   })
 
@@ -129,7 +130,7 @@ yargs
       const { storage, warnings } = await parseCSV(filename);
       const output = printStorage(storage);
       console.log(output);
-      warnings.map(warning => console.warn(chalk.red(warning)));
+      printWarnings(warnings);
     }
   })
 
@@ -143,7 +144,7 @@ yargs
       const { lines, warnings } = await parseCSV(filename);
       const output = printSQL(lines);
       console.log(output);
-      warnings.map(warning => console.warn(chalk.red(warning)));
+      printWarnings(warnings);
     }
   })
 
@@ -163,7 +164,7 @@ yargs
       const { lines, warnings } = await parseCSV(filename);
       const output = printCache(lines);
       console.log(output);
-      warnings.map(warning => console.warn(chalk.red(warning)));
+      printWarnings(warnings);
     }
   })
 

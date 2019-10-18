@@ -145,8 +145,8 @@ export default class InvoiceLineObserver {
     }
 
     // did not find anything suitable for this VM type
-    if (awsVmType && !gcpVmType) {
-      this.notMatched.add(awsVmType.name);
+    if (type === "VM" && gcpVmType && gcpVmType.name === "custom") {
+      this.notMatched.add(awsVmType.instance_type);
       this.notMatchedCount++;
     }
   }
@@ -181,7 +181,7 @@ export default class InvoiceLineObserver {
       warnings.push(
         `[${[...this.notMatched].join(
           ","
-        )}] could not be mapped to an equivalent GCP instance. Total number of unmatched instances: ${
+        )}] were mapped to a custom VM instance. Total number of custom instances: ${
           this.notMatchedCount
         }`
       );

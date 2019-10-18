@@ -19,6 +19,7 @@ import fse from "mz/fs";
 import path from "path";
 import assert from "assert";
 import { getAwsRegion, RegionCodeRegEx } from "../aws/Regions";
+import chalk from "chalk";
 
 export const HOURS_IN_A_MONTH = 730;
 export const SECONDS_IN_AN_HOUR = 3600;
@@ -174,4 +175,11 @@ export function lazyInitObject(container, field, factoryCallback) {
 
 export function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export function printWarnings(warnings) {
+  if (warnings.length) {
+    console.warn(chalk.red.bold("=== NOTES ==="));
+    warnings.map(warning => console.warn(chalk.red.bold(warning)));
+  }
 }
