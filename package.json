@@ -36,6 +36,7 @@
     "expect": "^24.8.0"
   },
   "scripts": {
+    "postversion": "git push && git push --tags",
     "test": "mocha -r esm"
   },
   "publishConfig": {
