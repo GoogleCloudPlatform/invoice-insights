@@ -33,7 +33,7 @@
     "yargs": "^14.2.0"
   },
   "devDependencies": {
-    "expect": "^24.8.0"
+    "expect": "^29.7.0"
   },
   "scripts": {
     "postversion": "git push && git push --tags",
